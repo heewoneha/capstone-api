@@ -30,11 +30,8 @@ def generate_background_image(background_type: BackgroundType, text: Optional[st
             size=IMAGE_SIZE,
         )
     elif background_type == BackgroundType.IMAGE:
-        response = openai.Image.create_variation(
-            image=image_bytes,
-            n=1,
-            size=IMAGE_SIZE,
-        )
+        # Return the original image if the background type is RAW IMAGE
+        return image_bytes
     elif background_type == BackgroundType.TEXT_IMAGE:
         response = openai.Image.create_edit(
             image=image_bytes,
