@@ -15,7 +15,7 @@ class BackgroundType(str, Enum):
 
 AZURE_STORAGE_CONTAINER_NAME = os.getenv("AZURE_STORAGE_CONTAINER_NAME")
 AZURE_STORAGE_CONNECTION_STR = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
-OPEN_AI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPEN_AI_API_KEY = os.getenv("OPEN_AI_API_KEY")
 
 BACKGROUND_DIR = "background"
 CHARACTER_DIR = "character"
@@ -29,7 +29,9 @@ class DanceName(str, Enum):
     """Enum for dance names."""
     ANXIETY = "anxiety"
 
-IMAGE_SIZE = "650x650"
+IMAGE_MODEL_NAME = "dall-e-3"
+
+IMAGE_SIZE = "1024x1024"
 
 IMAGES_DIR = "images"
 EMPTY_BACKGROUND_IMAGE_FILE_NAME = "empty_background.png"

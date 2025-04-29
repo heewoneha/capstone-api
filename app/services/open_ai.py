@@ -3,7 +3,13 @@
 import requests
 import openai
 from typing import Optional
-from app.services.constant import BackgroundType, OPEN_AI_API_KEY, IMAGE_SIZE, EMPTY_BACKGROUND_BASE_IMAGE_PATH
+from app.services.constant import (
+    BackgroundType,
+    OPEN_AI_API_KEY,
+    IMAGE_SIZE,
+    EMPTY_BACKGROUND_BASE_IMAGE_PATH,
+    IMAGE_MODEL_NAME,
+)
 
 
 def generate_background_image(background_type: BackgroundType, text: Optional[str], image_bytes: Optional[bytes]) -> bytes:
@@ -21,10 +27,11 @@ def generate_background_image(background_type: BackgroundType, text: Optional[st
     Returns:
         bytes: The generated background image in bytes.
     """
-    openai.api_key = OPEN_AI_API_KEY
+    client = openai.OpenAI(api_key=OPEN_AI_API_KEY)
 
     if background_type == BackgroundType.TEXT:
-        response = openai.Image.create(
+        response = client.images.generate(
+            model=IMAGE_MODEL_NAME,
             prompt=text,
             n=1,
             size=IMAGE_SIZE,
@@ -33,7 +40,7 @@ def generate_background_image(background_type: BackgroundType, text: Optional[st
         # Return the original image if the background type is RAW IMAGE
         return image_bytes
     elif background_type == BackgroundType.TEXT_IMAGE:
-        response = openai.Image.create_edit(
+        response = client.images.edit(
             image=image_bytes,
             prompt=text,
             n=1,
@@ -44,11 +51,8 @@ def generate_background_image(background_type: BackgroundType, text: Optional[st
             empty_image_bytes = f.read()
         return empty_image_bytes
     
-    image_url = (
-        response.get('data', [{}])[0].get('url')
-        if response.get('data') and isinstance(response['data'], list) and len(response['data']) > 0
-        else None
-    )
+    image_url = response.data[0].url
+
     if not image_url:
         error_message = "Failed to generate image URL from OpenAI response"
         raise Exception(error_message)
@@ -56,8 +60,9 @@ def generate_background_image(background_type: BackgroundType, text: Optional[st
     try:
         image_response = requests.get(image_url, stream=True)
         image_response.raise_for_status()
+        image_bytes = image_response.content
     except requests.RequestException as e:
         error_message = f"Failed to download image from OpenAI URL: {str(e)}"
         raise Exception(error_message)
 
-    return image_response.raw
+    return image_bytes
