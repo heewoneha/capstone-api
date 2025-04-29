@@ -5,7 +5,7 @@ from pydantic import BaseModel, field_validator
 from typing import Optional
 from uuid import UUID
 from http import HTTPStatus
-from app.api.v1.constant import (
+from app.services.constant import (
     BackgroundType,
     BACKGROUND_DIR,
     CHARACTER_DIR,
@@ -53,15 +53,14 @@ async def handle_background_request(payload: DataRequest, x_cd_user_id: str = He
     else:
         background_type = BackgroundType.NONE
 
-    # TODO: Open AI process
     try:
-        result_image = generate_background_image(background_type=background_type, text=payload.text, image_base64=payload.image_base64)
+        result_image = generate_background_image(background_type=background_type, text=payload.text, image_bytes=payload.image_base64)
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR, detail=f"Error generating background image: {str(e)}")
 
     # Blob process
     try:
-        BlobService.upload_base64_image(base64_str=result_image, blob_name=f"{BACKGROUND_DIR}/{user_uuid}.png")
+        BlobService.upload_binary_image(binary_data=result_image, blob_name=f"{BACKGROUND_DIR}/{user_uuid}.png")
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR, detail=f"Error uploading image to Blob: {str(e)}")
 

@@ -2,9 +2,8 @@
 
 from azure.storage.blob import BlobServiceClient
 from io import BytesIO
-from app.api.v1.constant import AZURE_STORAGE_CONTAINER_NAME, AZURE_STORAGE_CONNECTION_STR
+from app.services.constant import AZURE_STORAGE_CONTAINER_NAME, AZURE_STORAGE_CONNECTION_STR
 import base64
-from PIL import Image
 
 
 class AzureBlobService:
@@ -58,20 +57,3 @@ class AzureBlobService:
         except Exception as e:
             error_message = f"Failed to get a image file from {blob_name}, Exception={str(e)}"
             raise Exception(error_message)
-
-if __name__ == "__main__":
-    # Test for uploading a base64 image to Azure Blob Storage
-    import os
-    LOCAL_PATH = os.path.dirname(os.path.realpath(__file__))
-    EMPTY_BACKGROUND_BASE_IMAGE_PATH = os.path.join(LOCAL_PATH, "images", "empty_background.png")
-
-    with Image.open(EMPTY_BACKGROUND_BASE_IMAGE_PATH) as image:
-        buffered = BytesIO()
-        image.save(buffered, format="PNG")
-
-    img_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
-
-    BlobService = AzureBlobService()
-    BlobService.upload_base64_image(base64_str=img_base64, blob_name="123.png")
-
-    # print(BlobService.get_result_image(blob_name="background/123.png"))
