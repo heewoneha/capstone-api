@@ -21,7 +21,7 @@ BACKGROUND_DIR = "background"
 CHARACTER_DIR = "character"
 RESULT_DIR = "result"
 
-CHARACTER_CONTENT_TYPE_EXTENSION_MAP = {
+IMAGE_CONTENT_TYPE_EXTENSION_MAP = {
     "image/png": "png",
 }
 
