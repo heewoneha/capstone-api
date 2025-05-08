@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  torchserve:
+    build:
+      context: ./torchserve
+    ports:
+      - "8080:8080"  # inference
+      - "8081:8081"  # management
+      - "8082:8082"  # metrics
+    container_name: torchserve
+    networks:
+      - appnet
+
+  backend:
+    build:
+      context: ./app
+    ports:
+      - "8000:8000"
+    container_name: backend
+    networks:
+      - appnet
+    depends_on:
+      - torchserve
+
+networks:
+  appnet:
