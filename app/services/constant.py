@@ -28,6 +28,7 @@ IMAGE_CONTENT_TYPE_EXTENSION_MAP = {
 class DanceName(str, Enum):
     """Enum for dance names."""
     ANXIETY = "anxiety"
+    HIPLET_99 = "hiplet_99"
 
 IMAGE_MODEL_NAME = "dall-e-3"
 
@@ -38,3 +39,6 @@ EMPTY_BACKGROUND_IMAGE_FILE_NAME = "empty_background.png"
 
 LOCAL_PATH = os.path.dirname(os.path.realpath(__file__))
 EMPTY_BACKGROUND_BASE_IMAGE_PATH = os.path.join(LOCAL_PATH, IMAGES_DIR, EMPTY_BACKGROUND_IMAGE_FILE_NAME)
+
+SOURCE_DIR = os.path.join(LOCAL_PATH, "tmp_model_sources")
+MODEL_RESULT_DIR = os.path.join(LOCAL_PATH, "tmp_model_results")
