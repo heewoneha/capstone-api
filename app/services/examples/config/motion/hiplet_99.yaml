@@ -5,7 +5,7 @@ groundplane_joint: LeftFoot
 forward_perp_joint_vectors:
   - - LeftShoulder
     - RightShoulder
-  - - LeftUpLeg
-    - RightUpLeg
+  - - LeftThigh
+    - RightThigh
 scale: 0.01
 up: +y
