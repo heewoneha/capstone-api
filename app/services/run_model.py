@@ -1,6 +1,7 @@
 """Service to run the model and generate animations from images."""
 
 import os
+from moviepy import VideoFileClip
 from app.services.examples.image_to_annotations import image_to_annotations
 from app.services.examples.annotations_to_animation import annotations_to_animation
 from app.services.constant import LOCAL_PATH, BACKGROUND_DIR, CHARACTER_DIR, SOURCE_DIR, MODEL_RESULT_DIR, DanceName
@@ -55,9 +56,16 @@ def image_to_animation(user_uuid: str, dance_name: DanceName) -> tuple[str, str]
         error_message = f"Error occurred while creating animations - Exception={e}"
         raise Exception(error_message)
 
-    result_gif_path = os.path.join(MODEL_RESULT_DIR, user_uuid, f"{user_uuid}.gif")
-    result_mp4_path = os.path.join(MODEL_RESULT_DIR, user_uuid, f"{user_uuid}.mp4")
+    result_gif_path = os.path.join(MODEL_RESULT_DIR, user_uuid, "video.gif")
+    result_mp4_path = os.path.join(MODEL_RESULT_DIR, user_uuid, "video.mp4")
     
+    try:
+        clip = VideoFileClip(result_gif_path)
+        clip.write_videofile(result_mp4_path, codec="libx264", fps=30)
+    except Exception as e:
+        error_message = f"Error occurred while converting GIF to MP4 - Exception={e}"
+        raise Exception(error_message)
+
     if os.path.exists(result_gif_path) and os.path.exists(result_mp4_path):
         return result_gif_path, result_mp4_path
     else:
