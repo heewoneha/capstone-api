@@ -40,11 +40,11 @@ def image_to_animation(user_uuid: str, dance_name: DanceName) -> tuple[str, str]
         raise FileNotFoundError(error_message)
 
     char_anno_dir = os.path.join(MODEL_RESULT_DIR, user_uuid)
-    motion_cfg_fn = os.path.join(LOCAL_PATH, "config", "motion", f"{dance_name.value}.yaml")
-    retarget_cfg_fn = os.path.join(LOCAL_PATH, "config", "retarget", f"{dance_name.value}.yaml")
+    motion_cfg_fn = os.path.join(LOCAL_PATH, "examples", "config", "motion", f"{dance_name.value}.yaml")
+    retarget_cfg_fn = os.path.join(LOCAL_PATH, "examples", "config", "retarget", f"{dance_name.value}.yaml")
 
     try:
-        image_to_annotations(img_fn=character_img_path, char_anno_dir=char_anno_dir)
+        image_to_annotations(img_fn=character_img_path, out_dir=char_anno_dir)
     except Exception as e:
         error_message = f"Error occurred while creating annotations - Exception={e}"
         raise Exception(error_message)
