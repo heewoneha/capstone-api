@@ -35,8 +35,8 @@ async def handle_model_request(x_cd_user_id: str = Header(...)):
         raise HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR, detail=f"Error running model - dance_name={dance_name}: {str(e)}")
 
     try:
-        BlobService.upload_file(file_path=f"{MODEL_RESULT_DIR}/{user_uuid}/{user_uuid}.gif", blob_name=f"{RESULT_DIR}/{user_uuid}.gif")
-        BlobService.upload_file(file_path=f"{MODEL_RESULT_DIR}/{user_uuid}/{user_uuid}.mp4", blob_name=f"{RESULT_DIR}/{user_uuid}.mp4")
+        BlobService.upload_file(file_path=f"{MODEL_RESULT_DIR}/{user_uuid}/video.gif", blob_name=f"{RESULT_DIR}/{user_uuid}.gif")
+        BlobService.upload_file(file_path=f"{MODEL_RESULT_DIR}/{user_uuid}/video.mp4", blob_name=f"{RESULT_DIR}/{user_uuid}.mp4")
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR, detail=f"Error uploading model result files to Blob: {str(e)}")
 
