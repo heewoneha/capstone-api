@@ -26,18 +26,33 @@ def delete_tmp_files(user_uuid: str) -> None:
     if os.path.exists(char_anno_dir):
         os.rmdir(char_anno_dir)
 
-def apply_background_image(background_img_path: str, result_character_gif_path: str) -> str:
+def apply_background_image(background_img_path: str, result_character_gif_path: str) -> None:
+    """Apply a background image to the character GIF.
+
+    Args:
+        background_img_path (str): Path to the background image.
+        result_character_gif_path (str): Path to the character GIF.
+    """
     background = Image.open(background_img_path).convert("RGBA")
+    bg_width, bg_height = background.size
+
     reader = imageio.get_reader(result_character_gif_path)
     fps = reader.get_meta_data()['duration']
 
     frames = []
 
-    for frame in reader:
+    for id, frame in enumerate(reader):
+        if id == 0:
+            continue
         frame_image = Image.fromarray(frame).convert("RGBA")
-        composed = Image.alpha_composite(background.copy(), frame_image)
+        fg_width, fg_height = frame_image.size
+
+        composed = background.copy()
+        paste_x = (bg_width - fg_width) // 2
+        paste_y = (bg_height - fg_height) // 2
+        composed.paste(frame_image, (paste_x, paste_y), frame_image)
         frames.append(composed)
-    
+
     frames[0].save(
         result_character_gif_path,
         save_all=True,
@@ -45,10 +60,16 @@ def apply_background_image(background_img_path: str, result_character_gif_path: 
         duration=fps,
         loop=0
     )
-    
 
 def image_to_animation(user_uuid: str, dance_name: DanceName) -> tuple[str, str]:
-    # TODO: apply the background_img_path to the model
+    """Convert images to animation.
+
+    Args:
+        user_uuid (str): The user UUID.
+        dance_name (DanceName): The name of the dance.
+    Returns:
+        tuple[str, str]: Paths to the generated GIF and MP4 files.
+    """
     background_img_path = os.path.join(MODEL_SOURCE_DIR, BACKGROUND_DIR, f"{user_uuid}.png")
     character_img_path = os.path.join(MODEL_SOURCE_DIR, CHARACTER_DIR, f"{user_uuid}.png")
 
@@ -92,4 +113,3 @@ def image_to_animation(user_uuid: str, dance_name: DanceName) -> tuple[str, str]
     else:
         error_message = f"Error occurred - GIF or MP4 file not found for user_uuid={user_uuid}"
         raise Exception(error_message)
-
