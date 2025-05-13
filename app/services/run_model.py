@@ -1,6 +1,8 @@
 """Service to run the model and generate animations from images."""
 
 import os
+import imageio
+from PIL import Image
 from moviepy import VideoFileClip
 from app.services.examples.image_to_annotations import image_to_annotations
 from app.services.examples.annotations_to_animation import annotations_to_animation
@@ -24,6 +26,26 @@ def delete_tmp_files(user_uuid: str) -> None:
     if os.path.exists(char_anno_dir):
         os.rmdir(char_anno_dir)
 
+def apply_background_image(background_img_path: str, result_character_gif_path: str) -> str:
+    background = Image.open(background_img_path).convert("RGBA")
+    reader = imageio.get_reader(result_character_gif_path)
+    fps = reader.get_meta_data()['duration']
+
+    frames = []
+
+    for frame in reader:
+        frame_image = Image.fromarray(frame).convert("RGBA")
+        composed = Image.alpha_composite(background.copy(), frame_image)
+        frames.append(composed)
+    
+    frames[0].save(
+        result_character_gif_path,
+        save_all=True,
+        append_images=frames[1:],
+        duration=fps,
+        loop=0
+    )
+    
 
 def image_to_animation(user_uuid: str, dance_name: DanceName) -> tuple[str, str]:
     # TODO: apply the background_img_path to the model
@@ -50,10 +72,15 @@ def image_to_animation(user_uuid: str, dance_name: DanceName) -> tuple[str, str]
         error_message = f"Error occurred while creating animations - Exception={e}"
         raise Exception(error_message)
 
-    result_gif_path = os.path.join(MODEL_RESULT_DIR, user_uuid, "video.gif")
-    result_mp4_path = os.path.join(MODEL_RESULT_DIR, user_uuid, "video.mp4")
-    
     try:
+        result_gif_path = os.path.join(MODEL_RESULT_DIR, user_uuid, "video.gif")
+        apply_background_image(background_img_path=background_img_path, result_character_gif_path=result_gif_path)
+    except Exception as e:
+        error_message = f"Error occurred while applying background image - Exception={e}"
+        raise Exception(error_message)
+
+    try:
+        result_mp4_path = os.path.join(MODEL_RESULT_DIR, user_uuid, "video.mp4")
         clip = VideoFileClip(result_gif_path)
         clip.write_videofile(result_mp4_path, codec=VIDEO_CODEC, fps=VIDEO_FPS)
     except Exception as e:
