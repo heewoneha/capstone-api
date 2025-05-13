@@ -1,2 +1,5 @@
 __pycache__
 .env
+app/services/examples/logs/
+app/services/tmp_model_results/
+app/services/tmp_model_sources/
