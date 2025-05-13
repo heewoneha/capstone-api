@@ -1,4 +1,4 @@
-FROM python:3.13-slim
+FROM python:3.10-slim
 
 RUN addgroup --gid 1000 user
 RUN adduser --disabled-password --gecos '' --uid 1000 --gid 1000 user
@@ -22,6 +22,7 @@ WORKDIR /code
 
 ENV PYTHONPATH=/code
 ENV CAPSTONE_API_SCRIPT_PATH=/code
+ENV PYOPENGL_PLATFORM=osmesa
 
 COPY ./pyproject.toml /code/pyproject.toml
 COPY ./poetry.lock /code/poetry.lock

@@ -16,7 +16,7 @@ class AzureBlobService:
 
         Args:
             binary_data (bytes): The binary data of the image.
-            blob_name (str): The UUID of the user. It will be directly used as the blob name.
+            blob_name (str): The blob name to use for the uploaded file.
 
         Raises:
             Exception: When the upload fails, an exception is raised with the error message.
@@ -34,7 +34,7 @@ class AzureBlobService:
 
         Args:
             base64_str (str): The base64 encoded string of the image.
-            blob_name (str): The UUID of the user. It will be directly used as the blob name.
+            blob_name (str): The blob name to use for the uploaded file.
 
         Raises:
             Exception: When the upload fails, an exception is raised with the error message.
@@ -48,12 +48,39 @@ class AzureBlobService:
             error_message = f"Failed to upload a image file to {blob_name}, Exception={str(e)}"
             raise Exception(error_message)
 
-    def get_result_image(self, blob_name: str) -> bytes:
+    def upload_file(self, file_path: str, blob_name: str) -> None:
+        """Upload a file to Azure Blob Storage.
+
+        Args:
+            file_path (str): The path of the file to upload.
+            blob_name (str): The blob name to use for the uploaded file.
+
+        Raises:
+            Exception: When the upload fails, an exception is raised with the error message.
+        """
         try:
             blob_client = self.container_client.get_blob_client(blob_name)
-            blob_data = blob_client.download_blob()
-            image_bytes = blob_data.readall()
-            return image_bytes
+            with open(file_path, "rb") as data:
+                blob_client.upload_blob(data, overwrite=True)
         except Exception as e:
-            error_message = f"Failed to get a image file from {blob_name}, Exception={str(e)}"
+            error_message = f"Failed to upload a file to {blob_name}, Exception={str(e)}"
+            raise Exception(error_message)
+
+    def get_result_image(self, save_path: str, blob_name: str) -> None:
+        """Download a file from Azure Blob Storage.
+
+        Args:
+            save_path (str): The path where the downloaded file will be saved.
+            blob_name (str): The blob name to download.
+
+        Raises:
+            Exception: When the download fails, an exception is raised with the error message.
+        """
+        try:
+            blob_client = self.container_client.get_blob_client(blob_name)
+            with open(save_path, "wb") as file:
+                blob_client.download_blob().download_to_stream(file)
+
+        except Exception as e:
+            error_message = f"Failed to download a image file from {blob_name}, Exception={str(e)}"
             raise Exception(error_message)
