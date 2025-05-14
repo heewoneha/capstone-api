@@ -2,6 +2,7 @@
 
 import os
 import imageio
+import shutil
 from PIL import Image
 from moviepy import VideoFileClip
 from app.services.examples.image_to_annotations import image_to_annotations
@@ -32,7 +33,7 @@ def delete_tmp_result_files(user_uuid: str) -> None:
     char_anno_dir = os.path.join(MODEL_RESULT_DIR, user_uuid)
     
     if os.path.exists(char_anno_dir):
-        os.rmdir(char_anno_dir)
+        shutil.rmtree(char_anno_dir)
 
 def apply_background_image(background_img_path: str, result_character_gif_path: str) -> None:
     """Apply a background image to the character GIF.
