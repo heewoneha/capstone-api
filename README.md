@@ -13,7 +13,7 @@ Also used [Animated Drawings](https://github.com/facebookresearch/AnimatedDrawin
 # How to use
 
 > [!Note]
-> This project is still in development.
+> You must create the OpenAI API key and Azure Blob key before continuing!
 
 - Clone this repository
 ```bash
@@ -21,8 +21,17 @@ git clone https://github.com/heewoneha/capstone-api.git && \
 cd capstone-api
 ```
 
+- Set the env variable
+
+```.env
+# `.env`
+AZURE_STORAGE_CONTAINER_NAME="YOUR_VALUE"
+AZURE_STORAGE_CONNECTION_STRING="YOUR_VALUE"
+OPEN_AI_API_KEY="YOUR_VALUE"
+```
+
 - Run the server using Docker
 ```bash
-docker build -t capstone-api . && \
-docker run -d -p 3000:3000 --name capstone-api capstone-api
+docker compose build
+docker compose up
 ```
