@@ -16,9 +16,6 @@ ENV PATH="$PATH:${POETRY_HOME}/bin"
 
 
 WORKDIR /code
-USER user
-
-WORKDIR /code
 
 ENV PYTHONPATH=/code
 ENV CAPSTONE_API_SCRIPT_PATH=/code
@@ -31,7 +28,12 @@ RUN poetry install
 
 COPY . /code
 
-RUN chown -R user:user /code/app/services/tmp_model_sources &&\
+RUN mkdir -p /code/app/services/tmp_model_sources/character \
+    /code/app/services/tmp_model_sources/background \
+    /code/app/services/tmp_model_results && \
+    chown -R user:user /code/app/services/tmp_model_sources && \
     chown -R user:user /code/app/services/tmp_model_results
+
+USER user
 
 CMD ["poetry", "run", "gunicorn", "app.main:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--timeout", "120"]
