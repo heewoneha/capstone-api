@@ -4,7 +4,7 @@ RUN addgroup --gid 1000 user
 RUN adduser --disabled-password --gecos '' --uid 1000 --gid 1000 user
 
 RUN apt-get update && apt-get install -y \
-    curl build-essential git libgl1 \
+    curl build-essential git libgl1 libglib2.0-0 \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ARG POETRY_VERSION=1.8.5
