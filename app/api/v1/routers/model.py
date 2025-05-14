@@ -17,6 +17,8 @@ async def handle_model_request(x_cd_user_id: str = Header(...)):
     except ValueError:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail="Invalid UUID format for the user ID")
     
+    user_uuid = str(user_uuid)
+
     BlobService = AzureBlobService()
 
     try:
