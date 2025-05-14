@@ -31,4 +31,7 @@ RUN poetry install
 
 COPY . /code
 
+RUN chown -R user:user /code/app/services/tmp_model_sources &&\
+    chown -R user:user /code/app/services/tmp_model_results
+
 CMD ["poetry", "run", "gunicorn", "app.main:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--timeout", "120"]
