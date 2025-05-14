@@ -19,14 +19,14 @@ from shapely import geometry
 from OpenGL import GL
 
 from scipy.spatial import Delaunay
-from animated_drawings.model.transform import Transform
-from animated_drawings.model.time_manager import TimeManager
-from animated_drawings.model.retargeter import Retargeter
-from animated_drawings.model.arap import ARAP
-from animated_drawings.model.joint import Joint
-from animated_drawings.model.quaternions import Quaternions
-from animated_drawings.model.vectors import Vectors
-from animated_drawings.config import CharacterConfig, MotionConfig, RetargetConfig
+from app.services.animated_drawings.model.transform import Transform
+from app.services.animated_drawings.model.time_manager import TimeManager
+from app.services.animated_drawings.model.retargeter import Retargeter
+from app.services.animated_drawings.model.arap import ARAP
+from app.services.animated_drawings.model.joint import Joint
+from app.services.animated_drawings.model.quaternions import Quaternions
+from app.services.animated_drawings.model.vectors import Vectors
+from app.services.animated_drawings.config import CharacterConfig, MotionConfig, RetargetConfig
 
 
 class AnimatedDrawingMesh(TypedDict):

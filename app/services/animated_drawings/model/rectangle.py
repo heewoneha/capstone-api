@@ -4,7 +4,7 @@
 
 import numpy as np
 import OpenGL.GL as GL
-from animated_drawings.model.transform import Transform
+from app.services.animated_drawings.model.transform import Transform
 import ctypes
 
 

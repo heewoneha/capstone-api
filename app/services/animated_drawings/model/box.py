@@ -5,7 +5,7 @@
 import numpy as np
 import OpenGL.GL as GL
 import ctypes
-from animated_drawings.model.transform import Transform
+from app.services.animated_drawings.model.transform import Transform
 
 
 class Box(Transform):

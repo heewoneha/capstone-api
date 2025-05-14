@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Union, List, Tuple, Dict, TypedDict, Optional
 import yaml
 from pkg_resources import resource_filename
-from animated_drawings.utils import resolve_ad_filepath
+from app.services.animated_drawings.utils import resolve_ad_filepath
 
 
 class Config():

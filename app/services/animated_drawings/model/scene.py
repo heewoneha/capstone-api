@@ -2,11 +2,11 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-from animated_drawings.model.transform import Transform
-from animated_drawings.model.time_manager import TimeManager
-from animated_drawings.config import SceneConfig
-from animated_drawings.model.floor import Floor
-from animated_drawings.model.animated_drawing import AnimatedDrawing
+from app.services.animated_drawings.model.transform import Transform
+from app.services.animated_drawings.model.time_manager import TimeManager
+from app.services.animated_drawings.config import SceneConfig
+from app.services.animated_drawings.model.floor import Floor
+from app.services.animated_drawings.model.animated_drawing import AnimatedDrawing
 
 
 class Scene(Transform, TimeManager):

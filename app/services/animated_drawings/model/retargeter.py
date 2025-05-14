@@ -3,16 +3,16 @@
 # LICENSE file in the root directory of this source tree.
 
 import logging
-from animated_drawings.model.bvh import BVH
+from app.services.animated_drawings.model.bvh import BVH
 import numpy as np
 import numpy.typing as npt
 import math
-from animated_drawings.model.joint import Joint
+from app.services.animated_drawings.model.joint import Joint
 from sklearn.decomposition import PCA
 from typing import Tuple, List, Dict
-from animated_drawings.model.vectors import Vectors
-from animated_drawings.model.quaternions import Quaternions
-from animated_drawings.config import MotionConfig, RetargetConfig
+from app.services.animated_drawings.model.vectors import Vectors
+from app.services.animated_drawings.model.quaternions import Quaternions
+from app.services.animated_drawings.config import MotionConfig, RetargetConfig
 
 x_axis = np.array([1.0, 0.0, 0.0], dtype=np.float32)
 z_axis = np.array([0.0, 0.0, 1.0], dtype=np.float32)

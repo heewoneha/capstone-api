@@ -7,14 +7,14 @@ os.environ['PYOPENGL_PLATFORM'] = "osmesa"
 os.environ['MESA_GL_VERSION_OVERRIDE'] = "3.3"
 from OpenGL import GL, osmesa
 
-from animated_drawings.model.camera import Camera
-from animated_drawings.model.scene import Scene
-from animated_drawings.model.transform import Transform
-from animated_drawings.view.view import View
-from animated_drawings.view.utils import get_projection_matrix
-from animated_drawings.utils import read_background_image
-from animated_drawings.view.shaders.shader import Shader
-from animated_drawings.config import ViewConfig
+from app.services.animated_drawings.model.camera import Camera
+from app.services.animated_drawings.model.scene import Scene
+from app.services.animated_drawings.model.transform import Transform
+from app.services.animated_drawings.view.view import View
+from app.services.animated_drawings.view.utils import get_projection_matrix
+from app.services.animated_drawings.utils import read_background_image
+from app.services.animated_drawings.view.shaders.shader import Shader
+from app.services.animated_drawings.config import ViewConfig
 
 import logging
 from typing import Tuple, Dict

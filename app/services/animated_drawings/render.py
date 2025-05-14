@@ -9,19 +9,19 @@ import sys
 def start(user_mvc_cfg_fn: str):
 
     # build cfg
-    from animated_drawings.config import Config
+    from app.services.animated_drawings.config import Config
     cfg: Config = Config(user_mvc_cfg_fn)
 
     # create view
-    from animated_drawings.view.view import View
+    from app.services.animated_drawings.view.view import View
     view = View.create_view(cfg.view)
 
     # create scene
-    from animated_drawings.model.scene import Scene
+    from app.services.animated_drawings.model.scene import Scene
     scene = Scene(cfg.scene)
 
     # create controller
-    from animated_drawings.controller.controller import Controller
+    from app.services.animated_drawings.controller.controller import Controller
     controller = Controller.create_controller(cfg.controller, scene, view)
 
     # start the run loop

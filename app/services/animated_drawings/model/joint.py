@@ -3,7 +3,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from __future__ import annotations
-from animated_drawings.model.transform import Transform
+from app.services.animated_drawings.model.transform import Transform
 from typing import List
 
 

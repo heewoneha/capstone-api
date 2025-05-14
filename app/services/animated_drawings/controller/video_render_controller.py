@@ -16,11 +16,11 @@ import cv2
 from OpenGL import GL
 from tqdm import tqdm
 
-from animated_drawings.controller.controller import Controller
-from animated_drawings.model.scene import Scene
-from animated_drawings.model.animated_drawing import AnimatedDrawing
-from animated_drawings.view.view import View
-from animated_drawings.config import ControllerConfig
+from app.services.animated_drawings.controller.controller import Controller
+from app.services.animated_drawings.model.scene import Scene
+from app.services.animated_drawings.model.animated_drawing import AnimatedDrawing
+from app.services.animated_drawings.view.view import View
+from app.services.animated_drawings.config import ControllerConfig
 
 NoneType = type(None)  # for type checking below
 

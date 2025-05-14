@@ -5,8 +5,8 @@
 from __future__ import annotations  # so we can refer to class Type inside class
 import numpy as np
 import numpy.typing as npt
-from animated_drawings.model.vectors import Vectors
-from animated_drawings.model.quaternions import Quaternions
+from app.services.animated_drawings.model.vectors import Vectors
+from app.services.animated_drawings.model.quaternions import Quaternions
 import logging
 from typing import Union, Optional, List, Tuple
 

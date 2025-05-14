@@ -5,7 +5,7 @@
 from __future__ import annotations
 from abc import abstractmethod
 from typing import Tuple
-from animated_drawings.config import ViewConfig
+from app.services.animated_drawings.config import ViewConfig
 
 
 class View:
@@ -40,8 +40,8 @@ class View:
         """ Takes in a view dictionary from mvc config file and returns the appropriate view. """
         # create view
         if view_cfg.use_mesa:
-            from animated_drawings.view.mesa_view import MesaView
+            from app.services.animated_drawings.view.mesa_view import MesaView
             return MesaView(view_cfg)
         else:
-            from animated_drawings.view.window_view import WindowView
+            from app.services.animated_drawings.view.window_view import WindowView
             return WindowView(view_cfg)

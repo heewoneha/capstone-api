@@ -10,13 +10,13 @@ from typing import List, Tuple, Optional
 import numpy as np
 import numpy.typing as npt
 
-from animated_drawings.model.transform import Transform
-from animated_drawings.model.box import Box
-from animated_drawings.model.quaternions import Quaternions
-from animated_drawings.model.vectors import Vectors
-from animated_drawings.model.joint import Joint
-from animated_drawings.model.time_manager import TimeManager
-from animated_drawings.utils import resolve_ad_filepath
+from app.services.animated_drawings.model.transform import Transform
+from app.services.animated_drawings.model.box import Box
+from app.services.animated_drawings.model.quaternions import Quaternions
+from app.services.animated_drawings.model.vectors import Vectors
+from app.services.animated_drawings.model.joint import Joint
+from app.services.animated_drawings.model.time_manager import TimeManager
+from app.services.animated_drawings.utils import resolve_ad_filepath
 
 
 class BVH_Joint(Joint):

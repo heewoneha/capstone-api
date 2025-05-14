@@ -8,10 +8,10 @@ import time
 from typing import Optional
 import glfw
 
-from animated_drawings.controller.controller import Controller
-from animated_drawings.model.scene import Scene
-from animated_drawings.view.window_view import WindowView
-from animated_drawings.config import ControllerConfig
+from app.services.animated_drawings.controller.controller import Controller
+from app.services.animated_drawings.model.scene import Scene
+from app.services.animated_drawings.view.window_view import WindowView
+from app.services.animated_drawings.config import ControllerConfig
 
 
 class InteractiveController(Controller):

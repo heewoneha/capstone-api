@@ -2,7 +2,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-import animated_drawings.render
+from app.services.animated_drawings import render
 import logging
 from pathlib import Path
 import sys
@@ -38,7 +38,7 @@ def annotations_to_animation(char_anno_dir: str, motion_cfg_fn: str, retarget_cf
         yaml.dump(dict(mvc_cfg), f)
 
     # render the video
-    animated_drawings.render.start(output_mvc_cfn_fn)
+    render.start(output_mvc_cfn_fn)
 
 
 if __name__ == '__main__':

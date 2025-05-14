@@ -9,9 +9,9 @@ from typing import Optional
 from abc import abstractmethod
 import logging
 
-from animated_drawings.model.scene import Scene
-from animated_drawings.view.view import View
-from animated_drawings.config import ControllerConfig
+from app.services.animated_drawings.model.scene import Scene
+from app.services.animated_drawings.view.view import View
+from app.services.animated_drawings.config import ControllerConfig
 
 
 class Controller():
@@ -91,11 +91,11 @@ class Controller():
     def create_controller(controller_cfg: ControllerConfig, scene: Scene, view: View) -> Controller:
         """ Takes in a controller dictionary from mvc config file, scene, and view. Constructs and return appropriate controller."""
         if controller_cfg.mode == 'video_render':
-            from animated_drawings.controller.video_render_controller import VideoRenderController
+            from app.services.animated_drawings.controller.video_render_controller import VideoRenderController
             return VideoRenderController(controller_cfg, scene, view,)
         elif controller_cfg.mode == 'interactive':
-            from animated_drawings.controller.interactive_controller import InteractiveController
-            from animated_drawings.view.window_view import WindowView
+            from app.services.animated_drawings.controller.interactive_controller import InteractiveController
+            from app.services.animated_drawings.view.window_view import WindowView
             assert isinstance(view, WindowView)  # for static analysis. checks elsewhere ensure this always passes
             return InteractiveController(controller_cfg, scene, view)
         else:

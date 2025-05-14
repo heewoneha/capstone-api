@@ -2,8 +2,8 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-from animated_drawings.model.rectangle import Rectangle
-from animated_drawings.model.transform import Transform
+from app.services.animated_drawings.model.rectangle import Rectangle
+from app.services.animated_drawings.model.transform import Transform
 import numpy as np
 
 

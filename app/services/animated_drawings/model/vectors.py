@@ -9,7 +9,7 @@ import logging
 from typing import Union, Iterable, Tuple
 from numbers import Number
 from copy import copy
-from animated_drawings.utils import TOLERANCE
+from app.services.animated_drawings.utils import TOLERANCE
 
 
 class Vectors():

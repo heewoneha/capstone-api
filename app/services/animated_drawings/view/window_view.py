@@ -2,14 +2,14 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-from animated_drawings.view.view import View
-from animated_drawings.view.shaders.shader import Shader
-from animated_drawings.view.utils import get_projection_matrix
-from animated_drawings.utils import read_background_image
-from animated_drawings.model.scene import Scene
-from animated_drawings.model.camera import Camera
-from animated_drawings.model.transform import Transform
-from animated_drawings.config import ViewConfig
+from app.services.animated_drawings.view.view import View
+from app.services.animated_drawings.view.shaders.shader import Shader
+from app.services.animated_drawings.view.utils import get_projection_matrix
+from app.services.animated_drawings.utils import read_background_image
+from app.services.animated_drawings.model.scene import Scene
+from app.services.animated_drawings.model.camera import Camera
+from app.services.animated_drawings.model.transform import Transform
+from app.services.animated_drawings.config import ViewConfig
 import glfw
 import OpenGL.GL as GL
 import logging

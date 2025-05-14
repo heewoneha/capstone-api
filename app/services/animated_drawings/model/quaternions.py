@@ -7,9 +7,9 @@ import numpy as np
 import numpy.typing as npt
 import logging
 from typing import Union, Iterable, List, Tuple
-from animated_drawings.model.vectors import Vectors
+from app.services.animated_drawings.model.vectors import Vectors
 import math
-from animated_drawings.utils import TOLERANCE
+from app.services.animated_drawings.utils import TOLERANCE
 from functools import reduce
 
 
