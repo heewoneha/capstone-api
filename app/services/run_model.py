@@ -9,20 +9,28 @@ from app.services.examples.annotations_to_animation import annotations_to_animat
 from app.services.constant import VIDEO_CODEC, VIDEO_FPS, LOCAL_PATH, BACKGROUND_DIR, CHARACTER_DIR, MODEL_SOURCE_DIR, MODEL_RESULT_DIR, DanceName
 
 
-def delete_tmp_files(user_uuid: str) -> None:
-    """Delete temporary files for the given user UUID.
+def delete_tmp_source_files(user_uuid: str) -> None:
+    """Delete temporary source files for the given user UUID.
 
     Args:
-        user_uuid (str): The user UUID for which to delete temporary files.
+        user_uuid (str): The user UUID for which to delete temporary source files.
     """
     background_img_path = os.path.join(MODEL_SOURCE_DIR, BACKGROUND_DIR, f"{user_uuid}.png")
     character_img_path = os.path.join(MODEL_SOURCE_DIR, CHARACTER_DIR, f"{user_uuid}.png")
-    char_anno_dir = os.path.join(MODEL_RESULT_DIR, user_uuid)
-    
+
     if os.path.exists(background_img_path):
         os.remove(background_img_path)
     if os.path.exists(character_img_path):
         os.remove(character_img_path)
+
+def delete_tmp_result_files(user_uuid: str) -> None:
+    """Delete temporary result files for the given user UUID.
+
+    Args:
+        user_uuid (str): The user UUID for which to delete temporary result files.
+    """
+    char_anno_dir = os.path.join(MODEL_RESULT_DIR, user_uuid)
+    
     if os.path.exists(char_anno_dir):
         os.rmdir(char_anno_dir)
 

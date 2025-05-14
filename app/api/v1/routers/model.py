@@ -5,7 +5,7 @@ from uuid import UUID
 from http import HTTPStatus
 from app.services.constant import DanceName, BACKGROUND_DIR, CHARACTER_DIR, RESULT_DIR, MODEL_SOURCE_DIR, MODEL_RESULT_DIR
 from app.services.blob import AzureBlobService
-from app.services.run_model import delete_tmp_files, image_to_animation
+from app.services.run_model import delete_tmp_result_files, delete_tmp_source_files, image_to_animation
 
 router = APIRouter(tags=["model"])
 
@@ -31,16 +31,12 @@ async def handle_model_request(x_cd_user_id: str = Header(...)):
                 user_uuid=user_uuid,
                 dance_name=dance_name,
             )
+            BlobService.upload_file(file_path=f"{MODEL_RESULT_DIR}/{user_uuid}/video.gif", blob_name=f"{RESULT_DIR}/{dance_name.value}/{user_uuid}.gif")
+            BlobService.upload_file(file_path=f"{MODEL_RESULT_DIR}/{user_uuid}/video.mp4", blob_name=f"{RESULT_DIR}/{dance_name.value}/{user_uuid}.mp4")
+            delete_tmp_result_files(user_uuid=user_uuid)
+        delete_tmp_source_files(user_uuid=user_uuid)
     except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR, detail=f"Error running model - dance_name={dance_name}: {str(e)}")
-
-    try:
-        BlobService.upload_file(file_path=f"{MODEL_RESULT_DIR}/{user_uuid}/video.gif", blob_name=f"{RESULT_DIR}/{user_uuid}.gif")
-        BlobService.upload_file(file_path=f"{MODEL_RESULT_DIR}/{user_uuid}/video.mp4", blob_name=f"{RESULT_DIR}/{user_uuid}.mp4")
-    except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR, detail=f"Error uploading model result files to Blob: {str(e)}")
-
-    delete_tmp_files(user_uuid=user_uuid)
+        raise HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR, detail=f"Error processing model - dance_name={dance_name}: {str(e)}")
 
     return {
         "message": "Model has been executed successfully.",
