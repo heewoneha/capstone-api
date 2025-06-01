@@ -31,9 +31,6 @@ async def handle_background_request(payload: DataRequest, x_cd_user_id: str = He
     except ValueError:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail="Invalid UUID format for the user ID")
 
-    if not payload.text and not payload.image_base64:
-        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail="At least one of text or image is required")
-
     BlobService = AzureBlobService()
 
     if payload.text and payload.image_base64:
