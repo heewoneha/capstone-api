@@ -1,9 +1,11 @@
 """Azure Blob Storage Service."""
 
+import base64
+import io
 from azure.storage.blob import BlobServiceClient
 from io import BytesIO
 from app.services.constant import AZURE_STORAGE_CONTAINER_NAME, AZURE_STORAGE_CONNECTION_STR
-import base64
+from PIL import Image
 
 
 class AzureBlobService:
@@ -84,3 +86,20 @@ class AzureBlobService:
         except Exception as e:
             error_message = f"Failed to download a image file from {blob_name}, Exception={str(e)}"
             raise Exception(error_message)
+
+
+def character_white_background(image_bytes: bytes) -> bytes:
+    """Convert a character image to have a white background.
+    Args:
+        image_bytes (bytes): The binary data of the image.
+    Returns:
+        bytes: The binary data of the image with a white background.
+    """
+    original_image = Image.open(io.BytesIO(image_bytes)).convert("RGBA")
+    background = Image.new("RGBA", original_image.size, (255, 255, 255, 255))
+    background.paste(original_image, (0, 0), original_image)
+    output_buffer = io.BytesIO()
+    background.convert("RGB").save(output_buffer, format="PNG")
+    output_buffer.seek(0)
+
+    return output_buffer.getvalue()

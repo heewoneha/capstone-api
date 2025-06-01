@@ -4,7 +4,7 @@ from fastapi import UploadFile, File, Header, HTTPException, APIRouter
 from uuid import UUID
 from http import HTTPStatus
 from app.services.constant import CHARACTER_DIR, IMAGE_CONTENT_TYPE_EXTENSION_MAP
-from app.services.blob import AzureBlobService
+from app.services.blob import AzureBlobService, character_white_background
 
 router = APIRouter(tags=["character"])
 
@@ -22,9 +22,14 @@ async def handle_character_request(image_file: UploadFile = File(...), x_cd_user
     extension = IMAGE_CONTENT_TYPE_EXTENSION_MAP[image_file.content_type]
     image_bytes = await image_file.read()
 
+    try:
+        white_bg_image_bytes = character_white_background(image_bytes=image_bytes)
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR, detail=f"Error processing image: {str(e)}")
+
     BlobService = AzureBlobService()
     try:
-        BlobService.upload_binary_image(binary_data=image_bytes, blob_name=f"{CHARACTER_DIR}/{user_uuid}.{extension}")
+        BlobService.upload_binary_image(binary_data=white_bg_image_bytes, blob_name=f"{CHARACTER_DIR}/{user_uuid}.{extension}")
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR, detail=f"Error uploading image to Blob: {str(e)}")
 
