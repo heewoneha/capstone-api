@@ -2,7 +2,6 @@
 
 import base64
 import re
-import requests
 import openai
 from io import BytesIO
 from typing import Optional

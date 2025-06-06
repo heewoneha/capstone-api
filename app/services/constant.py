@@ -17,6 +17,9 @@ class DanceName(str, Enum):
     """Enum for dance names."""
     ANXIETY = "anxiety"
     HIPLET_99 = "hiplet_99"
+    TIRAMISU_CAKE = "tiramisu_cake"
+    BUMBLEBEE = "bumblebee"
+    GROOVE = "groove"
 
 AZURE_STORAGE_CONTAINER_NAME = os.getenv("AZURE_STORAGE_CONTAINER_NAME")
 AZURE_STORAGE_CONNECTION_STR = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
