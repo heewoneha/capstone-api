@@ -92,6 +92,7 @@ def generate_background_image(background_type: BackgroundType, text: Optional[st
             n=1,
             size=IMAGE_SIZE,
         )
+        return response.data[0].b64_json
     elif background_type == BackgroundType.IMAGE:
         # Return the original image if the background type is RAW IMAGE
         return base64.b64encode(image_file.getvalue()).decode("utf-8")
@@ -103,25 +104,11 @@ def generate_background_image(background_type: BackgroundType, text: Optional[st
             n=1,
             size=IMAGE_SIZE,
         )
+        return response.data[0].b64_json
     elif background_type == BackgroundType.NONE:
         with open(EMPTY_BACKGROUND_BASE_IMAGE_PATH, "rb") as f:
             empty_image_bytes = f.read()
         return base64.b64encode(empty_image_bytes).decode("utf-8")
     else:
         error_message = f"Unsupported background type: {background_type}"
-        raise Exception(error_message)
-
-    image_url = getattr(response.data[0], "url", None)
-
-    if not image_url:
-        error_message = "Failed to generate image URL from OpenAI response"
-        raise Exception(error_message)
-    
-    try:
-        image_response = requests.get(image_url, stream=True)
-        image_response.raise_for_status()
-        image_bytes = image_response.content
-        return base64.b64encode(image_bytes).decode("utf-8")
-    except requests.RequestException as e:
-        error_message = f"Failed to download image from OpenAI URL: {str(e)}"
         raise Exception(error_message)
