@@ -97,6 +97,7 @@ def generate_background_image(background_type: BackgroundType, text: Optional[st
         return base64.b64encode(image_file.getvalue()).decode("utf-8")
     elif background_type == BackgroundType.TEXT_IMAGE:
         response = client.images.edit(
+            model=IMAGE_MODEL_NAME,
             image=image_file,
             prompt=text,
             n=1,

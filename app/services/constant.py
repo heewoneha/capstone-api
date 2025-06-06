@@ -33,7 +33,7 @@ IMAGE_CONTENT_TYPE_EXTENSION_MAP = {
     "image/png": "png",
 }
 
-IMAGE_MODEL_NAME = "dall-e-3"
+IMAGE_MODEL_NAME = "gpt-image-1"
 
 IMAGE_SIZE = "1024x1024"
 
